@@ -765,6 +765,9 @@ const stage = $('#stage'), dotsEl = $('#dots'), list = $('#list');
 const N = TOOLS.length;
 const pad = (n) => String(n).padStart(2, '0');
 const isExt = (u) => /^https?:\/\//i.test(u || '');
+/* ✎ 툴을 새 탭으로 열기 — true = 사이트 안 폴더 툴도 전부 새 탭 · false = 다른 주소만 새 탭 */
+const NEW_TAB = true;
+const newTab = (u) => NEW_TAB || isExt(u);
 let cur = 0;
 
 $('#countBadge').textContent = pad(N);
@@ -806,7 +809,7 @@ function layout() {
   $('#nowNo').textContent = pad(cur + 1);
   const a = $('#nowOpen');
   a.href = t.url || '#';
-  if (isExt(t.url)) { a.target = '_blank'; a.rel = 'noopener'; } else { a.removeAttribute('target'); a.removeAttribute('rel'); }
+  if (newTab(t.url)) { a.target = '_blank'; a.rel = 'noopener'; } else { a.removeAttribute('target'); a.removeAttribute('rel'); }
   list.querySelectorAll('.row').forEach((r) => r.classList.toggle('on', +r.dataset.i === cur));
 }
 const go = (i) => { cur = (i % N + N) % N; layout(); };
@@ -815,7 +818,7 @@ const blocked = (t) => (t.state && STATE[t.state] ? t.state : (!t.url || t.url =
 const ready = (t) => !blocked(t);
 function openTool(t) {
   if (!ready(t)) { notice(t); return; }
-  if (isExt(t.url)) window.open(t.url, '_blank', 'noopener'); else location.href = t.url;
+  if (newTab(t.url)) window.open(t.url, '_blank', 'noopener'); else location.href = t.url;
 }
 
 $('#prev').onclick = () => go(cur - 1);
@@ -862,7 +865,7 @@ function drawList() {
         <div class="row-t">${esc(t.name)}</div>
         <div class="row-d">${esc(t.desc)}</div>
       </div>
-      <a class="row-go" href="${esc(t.url || '#')}" data-i="${i}" aria-label="${esc(t.name)} 바로 열기"${isExt(t.url) ? ' target="_blank" rel="noopener"' : ''}>
+      <a class="row-go" href="${esc(t.url || '#')}" data-i="${i}" aria-label="${esc(t.name)} 바로 열기"${newTab(t.url) ? ' target="_blank" rel="noopener"' : ''}>
         <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5 8.5 3.5M4.5 3.5h4v4"/></svg>
       </a>
     </li>`).join('') : '<li class="sh-empty">검색 결과가 없습니다</li>';
