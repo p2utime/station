@@ -276,6 +276,162 @@
       transition: transform 0.15s ease;
     }
     .fmt-btn-hl:hover { transform: scale(1.08); }
+
+    /* ===== 형광펜 · 글자색 설정 팝업 ===== */
+    .fmt-toolbar-standalone { position: relative; }
+    /* ▾ 버튼 자리 확보: 이 도구줄 버튼 좌우 여백만 살짝 줄임 (인용·검열 줄바꿈 방지) */
+    .fmt-toolbar-standalone .fmt-btn { padding-left: 5px; padding-right: 5px; }
+    .cp-open {
+      width: 17px;
+      height: 20px;
+      margin-left: -2px;
+      padding: 0;
+      border: 0;
+      border-radius: 6px;
+      background: #F3F4F6;
+      box-shadow: inset 0 0 0 1px rgba(14, 15, 18, 0.12);
+      color: #0E0F12;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      align-self: center;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .cp-open:hover { background: #E4E6EA; }
+    .cp-open.on { background: #0E0F12; color: #fff; box-shadow: none; }
+    .cp-open.on svg { transform: rotate(180deg); }
+    .cp-open svg { transition: transform 0.2s ease; }
+    .cp-kind { display: flex; gap: 2px; }
+    .cp-kind button {
+      padding: 3px 8px;
+      border: 0;
+      border-radius: 7px;
+      background: none;
+      color: #A0A5AD;
+      font: inherit;
+      font-size: 12.5px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .cp-kind button:hover { color: #6A7079; }
+    .cp-kind button.on { background: #F3F4F6; color: #0E0F12; }
+
+    .color-pop {
+      position: absolute;
+      z-index: 60;
+      width: 262px;
+      max-width: calc(100% - 4px);
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.9),
+        0 0 0 1px rgba(14, 15, 18, 0.08),
+        0 24px 50px -20px rgba(14, 15, 18, 0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      letter-spacing: -0.03em;
+      color: #0E0F12;
+      animation: cpIn 0.18s ease-out both;
+    }
+    .color-pop[hidden] { display: none; }
+    @keyframes cpIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .color-pop::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: var(--cp-arrow, 40px);
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      transform: rotate(45deg);
+      box-shadow: -1px -1px 0 rgba(14, 15, 18, 0.08);
+    }
+    .cp-head { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 900; }
+    .cp-x {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #F3F4F6;
+      color: #6A7079;
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .cp-x:hover { background: #E4E6EA; color: #0E0F12; }
+    .cp-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: #F3F4F6; }
+    .cp-tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 30px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6A7079;
+      cursor: pointer;
+    }
+    .cp-tab i { width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14); }
+    .cp-tab.on { background: #fff; color: #0E0F12; box-shadow: 0 2px 6px -2px rgba(14, 15, 18, 0.25); }
+    .cp-label { font-size: 11px; font-weight: 800; color: #6A7079; margin-bottom: -4px; }
+    .cp-hex { display: flex; align-items: center; gap: 8px; }
+    .cp-chip {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .cp-native { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
+    .cp-input {
+      flex: 1;
+      min-width: 0;
+      height: 34px !important;
+      padding: 0 10px !important;
+      border: 0 !important;
+      border-radius: 10px !important;
+      background: #fff !important;
+      box-shadow: inset 0 0 0 1.5px #E4E6EA !important;
+      font: 700 13px/34px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace !important;
+      letter-spacing: 0.04em !important;
+      color: #0E0F12 !important;
+      text-transform: uppercase;
+    }
+    .cp-input:focus { outline: none; box-shadow: inset 0 0 0 1.5px #2FA4DE !important; }
+    .cp-input.bad { box-shadow: inset 0 0 0 1.5px #e11d48 !important; }
+    .cp-sws { display: flex; gap: 6px; flex-wrap: wrap; }
+    .cp-sw {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.14);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .cp-sw:hover { transform: scale(1.1); }
+    .cp-sw.on { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #0E0F12; }
+    .cp-prev {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #F6F6F6;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1b1d;
+    }
+    .cp-prev mark { padding: 1px 2px; border-radius: 2px; color: inherit; }
     .hl-color-dot-picker {
       -webkit-appearance: none;
       border: 1px solid rgba(0,0,0,0.15);
@@ -3181,8 +3337,8 @@
           <div class="hl-wrap-simple">
             <button class="fmt-btn-hl" id="fmt-hl-btn" title="형광펜 칠하기 / 지우기">H</button>
             <div class="color-slot-group">
-              <input type="color" id="in-hl-color-1" value="#ffeb3b" class="hl-color-dot-picker active-slot" title="형광펜 1 (클릭하여 선택/변경)">
-              <input type="color" id="in-hl-color-2" value="#c8c8c8" class="hl-color-dot-picker" title="형광펜 2 (클릭하여 선택/변경)">
+              <input type="color" id="in-hl-color-1" value="#ffeb3b" class="hl-color-dot-picker active-slot" title="형광펜 1 (누르면 색·진하기 설정)">
+              <input type="color" id="in-hl-color-2" value="#c8c8c8" class="hl-color-dot-picker" title="형광펜 2 (누르면 색·진하기 설정)">
             </div>
           </div>
 
@@ -3190,13 +3346,58 @@
           <div class="hl-wrap-simple">
             <button class="fmt-btn-hl" id="fmt-tc-btn" title="글자색 입히기 / 지우기" style="background:#ffffff; color:#51aae1; border:1px solid #cbd5e1;">A</button>
             <div class="color-slot-group">
-              <input type="color" id="in-tc-color-1" value="#51aae1" class="hl-color-dot-picker active-slot" title="글자색 1 (클릭하여 선택/변경)">
-              <input type="color" id="in-tc-color-2" value="#c8c8c8" class="hl-color-dot-picker" title="글자색 2 (클릭하여 선택/변경)">
+              <input type="color" id="in-tc-color-1" value="#51aae1" class="hl-color-dot-picker active-slot" title="글자색 1 (누르면 색 설정)">
+              <input type="color" id="in-tc-color-2" value="#c8c8c8" class="hl-color-dot-picker" title="글자색 2 (누르면 색 설정)">
             </div>
           </div>
+          <button type="button" class="cp-open" id="fmt-color-pop" title="형광펜 · 글자색 설정 (HEX · 진하기)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
 
           <button class="fmt-btn" id="fmt-quote" title="인용구 추가/제거" style="font-size: 11.5px;">❝ 인용</button>
           <button class="fmt-btn" id="fmt-blur" title="검열 — 글자를 흐리게 (Ctrl+Shift+E)" style="font-size: 11.5px;">▒ 검열</button>
+
+
+          <!-- 형광펜 설정 팝업 -->
+          <div class="color-pop" id="hl-pop" role="dialog" aria-label="형광펜 설정" hidden>
+            <div class="cp-head">
+              <div class="cp-kind"><button type="button" class="on" data-kind="hl">형광펜</button><button type="button" data-kind="tc">글자색</button></div>
+              <button type="button" class="cp-x" data-close title="닫기">✕</button>
+            </div>
+            <div class="cp-tabs">
+              <button type="button" class="cp-tab" data-slot="0"><i></i>형광펜 1</button>
+              <button type="button" class="cp-tab" data-slot="1"><i></i>형광펜 2</button>
+            </div>
+            <span class="cp-label">색상 (HEX)</span>
+            <div class="cp-hex">
+              <label class="cp-chip" title="색 직접 고르기"><input type="color" class="cp-native"></label>
+              <input type="text" class="cp-input" maxlength="7" spellcheck="false" autocomplete="off" placeholder="#FFEB3B">
+            </div>
+            <div class="cp-sws"><button type="button" class="cp-sw" data-color="#ffeb3b" style="background:#ffeb3b;" title="#FFEB3B"></button><button type="button" class="cp-sw" data-color="#ffb3c7" style="background:#ffb3c7;" title="#FFB3C7"></button><button type="button" class="cp-sw" data-color="#a8e6cf" style="background:#a8e6cf;" title="#A8E6CF"></button><button type="button" class="cp-sw" data-color="#8fdcfb" style="background:#8fdcfb;" title="#8FDCFB"></button><button type="button" class="cp-sw" data-color="#d7c4f2" style="background:#d7c4f2;" title="#D7C4F2"></button><button type="button" class="cp-sw" data-color="#c8c8c8" style="background:#c8c8c8;" title="#C8C8C8"></button></div>
+        <span class="cp-label">진하기</span>
+        <div class="range-row">
+          <input type="range" id="in-hlop" min="5" max="100" step="1" value="48">
+          <span id="hlop-val">48%</span>
+        </div>
+            <div class="cp-prev"></div>
+          </div>
+
+          <!-- 글자색 설정 팝업 -->
+          <div class="color-pop" id="tc-pop" role="dialog" aria-label="글자색 설정" hidden>
+            <div class="cp-head">
+              <div class="cp-kind"><button type="button" data-kind="hl">형광펜</button><button type="button" class="on" data-kind="tc">글자색</button></div>
+              <button type="button" class="cp-x" data-close title="닫기">✕</button>
+            </div>
+            <div class="cp-tabs">
+              <button type="button" class="cp-tab" data-slot="0"><i></i>글자색 1</button>
+              <button type="button" class="cp-tab" data-slot="1"><i></i>글자색 2</button>
+            </div>
+            <span class="cp-label">색상 (HEX)</span>
+            <div class="cp-hex">
+              <label class="cp-chip" title="색 직접 고르기"><input type="color" class="cp-native"></label>
+              <input type="text" class="cp-input" maxlength="7" spellcheck="false" autocomplete="off" placeholder="#FFEB3B">
+            </div>
+            
+            <div class="cp-prev"></div>
+          </div>
 
           <!-- 채팅 모드 전용 퀵 삽입 버튼 -->
           <div id="chat-quick-tools" style="display:none; align-items:center; gap:4px; margin-left:auto;">
@@ -4287,6 +4488,7 @@
       fontSize: 24,
       letterSpacing: 0,
       charWidth: 100, // 장평(%)
+      hlOpacity: 48,  // 형광펜 진하기(%) — 48이 원래 기본 진하기
       columns: 1,          // 본문 단 나누기 (1 / 2)
       novelIndent: false,  // 2단: 첫 줄 들여쓰기
       novelJustify: false, // 2단: 양쪽 정렬
@@ -4542,6 +4744,7 @@
           { id: 'in-fs', valId: 'fs-val', unit: 'px', val: state.fontSize },
           { id: 'in-ls', valId: 'ls-val', unit: 'px', val: state.letterSpacing },
           { id: 'in-hs', valId: 'hs-val', unit: '%', val: state.charWidth ?? 100 },
+          { id: 'in-hlop', valId: 'hlop-val', unit: '%', val: state.hlOpacity ?? 48 },
           { id: 'in-lh', valId: 'lh-val', unit: '', val: state.lineHeightMult },
           { id: 'in-pad', valId: 'pad-val', unit: 'px', val: state.padding },
           { id: 'in-title-fs', valId: 'title-fs-val', unit: 'px', val: state.titleFontSize },
@@ -4919,6 +5122,13 @@
 
     function themeFontFam() { return getFontFamily(state.font); }
 
+    // 형광펜 진하기: 각 자리의 원래 진하기에 비율을 곱함 (기본 48%면 원래와 똑같음)
+    function hlAlpha(base) {
+      const op = state.hlOpacity ?? 48;
+      if (op === 48) return base;
+      return Math.max(0, Math.min(1, base * op / 48));
+    }
+
     // 서식 런 한 줄 그리기 (형광펜·글자색·밑줄·취소선·검열 포함)
     function drawRunsLine(runs, x, cy, fs, color, alpha = 1) {
       let curX = x;
@@ -4931,7 +5141,7 @@
           const mc = (run.markColor || '#ffeb3b').toLowerCase();
           const pc = prev && prev.mark && (prev.markColor || '#ffeb3b').toLowerCase() === mc;
           const nc = next && next.mark && (next.markColor || '#ffeb3b').toLowerCase() === mc;
-          ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', 0.48 * alpha);
+          ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', hlAlpha(0.48 * alpha));
           ctx.fillRect(pc ? curX : curX - 1, cy - fs * 0.55, run.width + (pc ? 0 : 1) + (nc ? 0 : 1), fs * 1.15);
         }
         const col = hexToRgba(run.textColor || color, alpha);
@@ -6509,7 +6719,7 @@
               else ctx.font = `${defaultWeight} ${fs}px ${emojiFont}`;
 
               if (run.mark) {
-                ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', 0.5 * defaultAlpha);
+                ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', hlAlpha(0.5 * defaultAlpha));
                 ctx.fillRect(curX - 1, centerY - (fs * 0.55), run.width + 2, fs * 1.15);
               }
 
@@ -6667,7 +6877,7 @@
               const markX = isPrevConnected ? curX : curX - 1;
               const markW = runW + (isPrevConnected ? 0 : 1) + (isNextConnected ? 0 : 1);
 
-              ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', 0.48 * alpha);
+              ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', hlAlpha(0.48 * alpha));
               ctx.fillRect(markX, centerY - (currentFs * 0.55), markW, currentFs * 1.15);
             }
 
@@ -7337,7 +7547,7 @@
                   ctx.font = fontStr;
 
                   if (run.mark) {
-                    ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', 0.55);
+                    ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', hlAlpha(0.55));
                     ctx.fillRect(curX - 1, centerY - (b.fontSize * 0.55), run.width + 2, b.fontSize * 1.15);
                   }
 
@@ -7439,7 +7649,7 @@
                     const markX = isPrevConnected ? curX : curX - 1;
                     const markW = run.width + (isPrevConnected ? 0 : 1) + (isNextConnected ? 0 : 1);
 
-                    ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', 0.48 * alpha);
+                    ctx.fillStyle = hexToRgba(run.markColor || '#ffeb3b', hlAlpha(0.48 * alpha));
                     ctx.fillRect(markX, lineY - (currentFs * 0.55), markW, currentFs * 1.15);
                   }
 
@@ -9543,6 +9753,166 @@
       });
     });
 
+    // ==========================================
+    // 형광펜 · 글자색 설정 팝업 (HEX 입력 · 자주 쓰는 색 · 형광펜 진하기)
+    // 색을 바꾸면 도구줄 색 동그라미에 그대로 넣고 원래 동작(input 이벤트)을 실행함
+    // ==========================================
+    const colorPops = {
+      hl: {
+        pop: document.getElementById('hl-pop'),
+        pickers: hlPickers,
+        colors: () => state.hlColors,
+        slot: () => state.curHlSlot || 0,
+        setSlot: (i) => setHlSlot(i),
+        preview: (c) => `미리보기 <mark style="background:${hexToRgba(c, Math.min(1, (state.hlOpacity ?? 48) / 100))};">형광펜 글자</mark> 입니다`
+      },
+      tc: {
+        pop: document.getElementById('tc-pop'),
+        pickers: tcPickers,
+        colors: () => state.textColors,
+        slot: () => state.curTcSlot || 0,
+        setSlot: (i) => setTcSlot(i),
+        preview: (c) => `미리보기 <span style="color:${c}; font-weight:800;">글자색 글자</span> 입니다`
+      }
+    };
+    let openColorPop = null;
+
+    function normHex(v) {
+      let h = String(v || '').trim().replace(/^#+/, '');
+      if (/^[0-9a-f]{3}$/i.test(h)) h = h.split('').map(c => c + c).join('');
+      return /^[0-9a-f]{6}$/i.test(h) ? ('#' + h).toLowerCase() : null;
+    }
+
+    function syncColorPop(kind) {
+      const cfg = colorPops[kind];
+      const el = cfg.pop;
+      const slot = cfg.slot();
+      const colors = cfg.colors();
+      const cur = colors[slot];
+      el.querySelectorAll('.cp-tab').forEach(t => {
+        const i = Number(t.dataset.slot);
+        t.classList.toggle('on', i === slot);
+        t.querySelector('i').style.background = colors[i];
+      });
+      el.querySelector('.cp-chip').style.background = cur;
+      el.querySelector('.cp-native').value = cur;
+      const inp = el.querySelector('.cp-input');
+      if (document.activeElement !== inp) { inp.value = cur.toUpperCase(); inp.classList.remove('bad'); }
+      el.querySelectorAll('.cp-sw').forEach(sw => sw.classList.toggle('on', sw.dataset.color.toLowerCase() === cur.toLowerCase()));
+      el.querySelector('.cp-prev').innerHTML = cfg.preview(cur);
+      if (kind === 'hl') {
+        const r = document.getElementById('in-hlop');
+        r.value = state.hlOpacity ?? 48;
+        document.getElementById('hlop-val').innerText = `${r.value}%`;
+        updateRangeProgress(r);
+      }
+    }
+
+    function applyPopColor(kind, hex) {
+      const cfg = colorPops[kind];
+      const picker = cfg.pickers[cfg.slot()];
+      picker.value = hex;
+      picker.dispatchEvent(new Event('input', { bubbles: true })); // 원래 색 동그라미 동작 그대로
+      syncColorPop(kind);
+    }
+
+    let colorPopAnchor = null;
+    function placeColorPop(kind) {
+      const el = colorPops[kind].pop;
+      const btn = colorPopAnchor || colorPops[kind].pickers[colorPops[kind].slot()];
+      const bar = el.offsetParent || el.parentElement;
+      const br = btn.getBoundingClientRect();
+      const tr = bar.getBoundingClientRect();
+      const w = el.offsetWidth;
+      const center = br.left - tr.left + br.width / 2;
+      const left = Math.max(0, Math.min(center - 40, tr.width - w));
+      el.style.left = `${left}px`;
+      el.style.top = `${br.bottom - tr.top + 10}px`;
+      el.style.setProperty('--cp-arrow', `${Math.max(12, Math.min(w - 24, center - left - 6))}px`);
+    }
+
+    const colorPopBtn = document.getElementById('fmt-color-pop');
+    let lastColorPop = 'hl';
+
+    function closeColorPop() {
+      if (!openColorPop) return;
+      colorPops[openColorPop].pop.hidden = true;
+      openColorPop = null;
+      colorPopBtn.classList.remove('on');
+    }
+
+    function openColorPopAt(kind, anchor) {
+      if (openColorPop && openColorPop !== kind) closeColorPop();
+      openColorPop = kind;
+      lastColorPop = kind;
+      colorPopAnchor = anchor;
+      colorPopBtn.classList.add('on');
+      const el = colorPops[kind].pop;
+      el.hidden = false;
+      syncColorPop(kind);
+      placeColorPop(kind);
+    }
+
+    // 도구줄 색 동그라미를 누르면: 그 슬롯을 고르고 설정 팝업 열기
+    // (색 직접 고르기 창은 팝업 안 색 네모에서 열림)
+    Object.keys(colorPops).forEach(kind => {
+      colorPops[kind].pickers.forEach(picker => {
+        picker.addEventListener('click', (e) => {
+          e.preventDefault(); // 브라우저 기본 색 선택 창 대신 팝업
+          e.stopPropagation();
+          setTimeout(() => openColorPopAt(kind, picker), 0); // 슬롯 선택(원래 동작)이 먼저 끝난 뒤 열기
+        });
+      });
+    });
+
+    // ▾ 버튼 하나로 형광펜·글자색 팝업 (마지막에 본 쪽으로 열림)
+    colorPopBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (openColorPop) closeColorPop();
+      else openColorPopAt(lastColorPop, colorPopBtn);
+    });
+
+    Object.keys(colorPops).forEach(kind => {
+      const cfg = colorPops[kind];
+      cfg.pop.querySelectorAll('.cp-kind button').forEach(b => b.addEventListener('click', () => {
+        if (b.dataset.kind !== kind) openColorPopAt(b.dataset.kind, colorPopAnchor); // 같은 자리에서 형광펜↔글자색 전환
+      }));
+      const el = cfg.pop;
+      el.addEventListener('click', (e) => e.stopPropagation());
+      el.querySelector('[data-close]').addEventListener('click', closeColorPop);
+      el.querySelectorAll('.cp-tab').forEach(t => t.addEventListener('click', () => {
+        cfg.setSlot(Number(t.dataset.slot));
+        syncColorPop(kind);
+      }));
+      el.querySelector('.cp-native').addEventListener('input', (e) => applyPopColor(kind, e.target.value));
+      const inp = el.querySelector('.cp-input');
+      inp.addEventListener('input', () => {
+        const hex = normHex(inp.value);
+        inp.classList.toggle('bad', !hex && inp.value.trim() !== '');
+        if (hex) applyPopColor(kind, hex);
+      });
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }
+        if (e.key === 'Escape') { closeColorPop(); }
+      });
+      inp.addEventListener('blur', () => {
+        inp.classList.remove('bad');
+        inp.value = cfg.colors()[cfg.slot()].toUpperCase();
+      });
+      el.querySelectorAll('.cp-sw').forEach(sw => sw.addEventListener('click', () => applyPopColor(kind, sw.dataset.color)));
+    });
+
+    // 도구줄 색 동그라미를 직접 바꿔도 팝업이 따라가게
+    [...hlPickers, ...tcPickers].forEach(p => {
+      p.addEventListener('input', () => { if (openColorPop) syncColorPop(openColorPop); });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (openColorPop && !e.target.closest('.color-pop') && !e.target.closest('.hl-color-dot-picker')) closeColorPop();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeColorPop(); });
+    window.addEventListener('resize', () => { if (openColorPop) placeColorPop(openColorPop); });
+
     document.getElementById('fmt-quote').addEventListener('click', () => {
       const ta = document.getElementById('in-text');
       const val = ta.value;
@@ -9800,6 +10170,12 @@
     document.getElementById('in-fs').addEventListener('input', (e) => {
       state.fontSize = parseInt(e.target.value, 10);
       document.getElementById('fs-val').innerText = `${state.fontSize}px`;
+      render();
+    });
+    document.getElementById('in-hlop').addEventListener('input', (e) => {
+      state.hlOpacity = parseInt(e.target.value, 10);
+      document.getElementById('hlop-val').innerText = `${state.hlOpacity}%`;
+      if (typeof openColorPop !== 'undefined' && openColorPop === 'hl') syncColorPop('hl');
       render();
     });
     document.getElementById('in-hs').addEventListener('input', (e) => {
@@ -10971,6 +11347,7 @@
       renderChatImageList();
       state.vAlign = preset.vAlign || 'middle'; // 세로 정렬이 없던 예전 프리셋은 원래대로 가운데
       state.charWidth = preset.charWidth ?? 100; // 장평이 없던 예전 프리셋은 100%
+      state.hlOpacity = preset.hlOpacity ?? 48; // 형광펜 진하기가 없던 예전 프리셋은 원래 진하기
       state.columns = preset.columns === 2 ? 2 : 1; // 단 설정이 없던 예전 프리셋은 1단
       state.novelIndent = !!preset.novelIndent;
       state.novelJustify = !!preset.novelJustify;
@@ -10995,6 +11372,7 @@
         { id: 'in-fs', valId: 'fs-val', unit: 'px', val: state.fontSize },
         { id: 'in-ls', valId: 'ls-val', unit: 'px', val: state.letterSpacing },
           { id: 'in-hs', valId: 'hs-val', unit: '%', val: state.charWidth ?? 100 },
+          { id: 'in-hlop', valId: 'hlop-val', unit: '%', val: state.hlOpacity ?? 48 },
         { id: 'in-lh', valId: 'lh-val', unit: '', val: state.lineHeightMult },
         { id: 'in-pad', valId: 'pad-val', unit: 'px', val: state.padding },
         { id: 'in-title-fs', valId: 'title-fs-val', unit: 'px', val: state.titleFontSize },
